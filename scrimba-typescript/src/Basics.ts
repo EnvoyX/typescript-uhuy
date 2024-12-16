@@ -1,4 +1,4 @@
-let nyName = 'Bob'; // Implicit defined type
+let nyName = "Bob"; // Implicit defined type
 
 // Primitive Data Types: string, number, boolean
 // Challenge: Explicitly type the variables below:
@@ -9,7 +9,7 @@ let isStudent: boolean = false;
 
 // Defining Custom Types
 type Food = string;
-let favoritefood: Food = 'Nasi Goreng';
+let favoritefood: Food = "Nasi Goreng";
 
 // Challenge: finish the object type definition
 // Challenge #2: try to figure out how to move the nested address object type
@@ -40,25 +40,25 @@ type Person = {
 };
 
 let person1: Person = {
-  name: 'Joe',
+  name: "Joe",
   age: 42,
   isStudent: true,
   address: {
-    street: 'Akmal Street',
-    city: 'Belobog',
-    country: 'Teyvat',
+    street: "Akmal Street",
+    city: "Belobog",
+    country: "Teyvat",
   },
-  religion: 'islam',
+  religion: "islam",
 };
 
 let person2: Person = {
-  name: 'Jill',
+  name: "Jill",
   age: 66,
   isStudent: false,
   address: {
-    street: 'Akmal Street',
-    city: 'Belobog',
-    country: 'Teyvat',
+    street: "Akmal Street",
+    city: "Belobog",
+    country: "Teyvat",
   },
 };
 
@@ -67,3 +67,22 @@ function displayInfo(person: Person) {
 }
 
 displayInfo(person1);
+
+//  Literal Types
+let namaKucing = "Tom"; // Allowed to change, reassign to any string value
+let namaSaya: "Soni" = "Soni"; // Implicit data type and only assignable to "Soni"
+const namaSaya3: "Soni" = "Soni"; // cannot re-assign and only assignable to "Soni"
+
+// let namaSaya2: "Soni" = "Andi"; // Error
+// namaSaya = 25 // Error
+
+// Union Types
+
+type User = {
+  username: string;
+  role: "guest" | "member" | "admin";
+};
+type UserRole = "guest" | "member" | "admin";
+
+let userRole: UserRole = "guest";
+// let userRole2: UserRole = "hacker";  // Error

@@ -13,17 +13,24 @@ type Pizza = {
  * Look through the code if you need a reminder as to what data types those should be.
  */
 
+/**
+ * Challenge #7: using literal types and unions, update the Order status so that
+ * it can only ever be "ordered" or "completed"
+ */
+
+type StatusOrder = "ordered" | "completed";
+
 type Order = {
   id: number;
   pizza: Pizza;
-  status: string;
+  status: StatusOrder;
 };
 
 const menu = [
-  { name: 'Margherita', price: 8 },
-  { name: 'Pepperoni', price: 10 },
-  { name: 'Hawaiian', price: 10 },
-  { name: 'Veggie', price: 9 },
+  { name: "Margherita", price: 8 },
+  { name: "Pepperoni", price: 10 },
+  { name: "Hawaiian", price: 10 },
+  { name: "Veggie", price: 9 },
 ];
 
 /**
@@ -32,7 +39,7 @@ const menu = [
 
 let cashInRegister: number = 100;
 let nextOrderId: number = 1;
-const orderQueue: Order[] = [];
+const orderHistory: Order[] = [];
 
 /**
  * Challenge #3: teach TS that the pizzaObj is supposed to be a Pizza type.
@@ -52,12 +59,12 @@ function placeOrder(pizzaName: string) {
     return;
   }
   cashInRegister += selectedPizza.price;
-  const newOrder = {
+  const newOrder: Order = {
     id: nextOrderId++,
     pizza: selectedPizza,
-    status: 'ordered',
+    status: "ordered",
   };
-  orderQueue.push(newOrder);
+  orderHistory.push(newOrder);
   return newOrder;
 }
 
@@ -67,19 +74,31 @@ function placeOrder(pizzaName: string) {
  * additional warnings TS comes up with and fix those (cost property at addNewPizza).
  */
 
+/**
+ * Challenge #6: Fix the warning below by handling the "sad path" scenario!
+ */
+
 function completeOrder(orderId: number) {
-  const order = orderQueue.find((order) => order.id === orderId);
-  order.status = 'completed';
+  const order = orderHistory.find((order) => order.id === orderId);
+  // Defensive Coding / Guard Clause
+  if (!order) {
+    console.error(`There's no ${order} ID Order`);
+    return;
+  }
+  order.status = "completed";
   return order;
 }
 
-addNewPizza({ name: 'Chicken Bacon Ranch', price: 12 });
-addNewPizza({ name: 'BBQ Chicken', price: 12 });
-addNewPizza({ name: 'Spicy Sausage', price: 11 });
+addNewPizza({ name: "Chicken Bacon Ranch", price: 12 });
+addNewPizza({ name: "BBQ Chicken", price: 12 });
+addNewPizza({ name: "Spicy Sausage", price: 11 });
 
-placeOrder('Chicken Bacon Ranch');
+placeOrder("Chicken Bacon Ranch");
 completeOrder(1);
 
-console.log('Menu:', menu);
-console.log('Cash in register:', cashInRegister);
-console.log('Order queue:', orderQueue);
+placeOrder("BBQ Chicken");
+completeOrder(2);
+
+console.log("Menu:", menu);
+console.log("Cash in register:", cashInRegister);
+console.log("Order queue:", orderHistory);
